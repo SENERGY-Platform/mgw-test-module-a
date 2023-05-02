@@ -1,0 +1,32 @@
+modfileVersion: "v1"
+id: github.com/SENERGY-Platform/mgw-test-module-a
+name: Eclipse Mosquitto
+description: Eclipse Mosquitto is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers.
+version: v0.0.1
+type: add-on
+tags:
+  - mqtt
+  - broker
+  - eclipse
+  - mosquitto
+deploymentType: single
+services:
+  server:
+    name: Mosquitto MQTT Server
+    image: eclipse-mosquitto:2.0.15
+    include:
+      - mountPoint: /mosquitto/config/mosquitto.conf
+        source: mosquitto.conf
+        readOnly: true
+    ports:
+      - port: 1883
+#        hostPort: 1883
+volumes:
+  data:
+    - mountPoint: /mosquitto/data
+      services:
+        - server
+  log:
+    - mountPoint: /mosquitto/log
+      services:
+        - server
